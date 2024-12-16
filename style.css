@@ -1,0 +1,86 @@
+body,head{
+ 
+}
+h1{text-align: center;
+  font-size: 50px;
+  height: 100%;
+  width: 100%;
+  background-color:rgb(42, 155, 42);
+}
+
+img{
+  height: 100%;
+  width:100%;
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fc9c48e7;
+        }
+        
+         
+        .about-nda h2 {
+      font-size: 36px;
+      margin: 20px 0;
+      text-align: left; /* Aligns the text to the left */
+      padding-left: 20px; 
+        }
+        .about-nda p {
+      text-align: justify; /* Optional: aligns paragraph text neatly */
+      padding: 0 20px; /* Adds padding around paragraphs */
+    }
+    .accordion-container {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: #ee8002;
+      box-shadow: 0px 0px 10px rgba(72, 1, 1, 0.1);
+    }
+    .accordion-item {
+      border-bottom: 1px solid #ddd;
+    }
+    .accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      padding: 15px 20px;
+      background: #5b1e25; /* Change this color for different theme */
+      color: #eaa50f; /* Text color */
+      font-weight: bold;
+      font-size: 22px; /* Increased font size */
+      transition: background 0.3s, font-size 0.3s;
+    }
+    .accordion-header:hover {
+      background: #0056b3; /* Change color on hover */
+      font-size: 24px; /* Slight font size increase on hover */
+    }
+    .accordion-header .icon {
+      font-size: 24px; /* Icon size */
+    }
+    .accordion-content {
+      display: none; /* Initially hidden */
+      padding: 20px;
+      background: #f9f9f9;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .image-container {
+      display: flex;
+      justify-content: space-around; /* Space between images */
+      align-items: center; /* Align images vertically */
+      gap: 10px; /* Spacing between images */
+    }
+    .image-container img {
+      width: 200px; /* Set the width of the images */
+      height: auto; /* Maintain aspect ratio */
+    }
+    
+
+
+
+a{ font-size: x-large;
+
+}
