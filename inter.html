@@ -40,7 +40,54 @@
         </div>
     </div>
 
-    
+    <script>
+        let totalIncome = 0;
+        let totalExpenses = 0;
+
+        function addIncome() {
+            const desc = document.getElementById('income-desc').value;
+            const amount = parseFloat(document.getElementById('income-amount').value);
+
+            if (desc && amount) {
+                totalIncome += amount;
+
+                const incomeList = document.getElementById('income-list');
+                const listItem = document.createElement('li');
+                listItem.textContent = `${desc}: $${amount}`;
+                incomeList.appendChild(listItem);
+
+                updateSummary();
+
+                document.getElementById('income-desc').value = '';
+                document.getElementById('income-amount').value = '';
+            }
+        }
+
+        function addExpense() {
+            const desc = document.getElementById('expense-desc').value;
+            const amount = parseFloat(document.getElementById('expense-amount').value);
+
+            if (desc && amount) {
+                totalExpenses += amount;
+
+                const expenseList = document.getElementById('expense-list');
+                const listItem = document.createElement('li');
+                listItem.textContent = `${desc}: $${amount}`;
+                expenseList.appendChild(listItem);
+
+                updateSummary();
+
+                document.getElementById('expense-desc').value = '';
+                document.getElementById('expense-amount').value = '';
+            }
+        }
+
+        function updateSummary() {
+            document.getElementById('total-income').textContent = totalIncome.toFixed(2);
+            document.getElementById('total-expenses').textContent = totalExpenses.toFixed(2);
+            document.getElementById('balance').textContent = (totalIncome - totalExpenses).toFixed(2);
+        }
+    </script>
     
 </body>
 </html>
