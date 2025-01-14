@@ -1,0 +1,115 @@
+*{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+
+  header p{
+    background-color: #45a049;
+    color: #fff;
+    margin: 0%;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-align: center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+  }
+
+  .FAQsVideos {
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    padding-left: 5%;
+  }
+  
+  .video-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 35px;
+  }
+  
+  video {
+    width: 400px; /* Set video width to 50% of container */
+    height: auto; /* Keep aspect ratio */
+    border-radius: 10px;
+  }
+  
+  .video-container p {
+    font-size: 20px; /* Description font size */
+    font-weight: lighter; /* Make the description bold */
+    margin: 0; /* Remove margin from p tag */
+    width: 50%; /* Set description width to 50% of container */
+  }
+
+  .faq-container {
+    max-width: 70%;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+  }
+  
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    color: #000000;
+    padding: 35px 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  
+  .faq-item {
+    margin-bottom: 15px;
+  }
+  
+  .faq-question {
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    background: #0077cc; 
+    color: #fff; 
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    outline: none;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  
+  h2{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 500;
+  }
+  .faq-question:hover {
+    background: #005fa3; 
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background: #f1f1f1;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 10px 15px;
+    color: #333;
+  }
+  
+  .faq-answer p {
+    margin: 0;
+    font-weight: 300;
+  }
+
+  .faq-answer ul{
+    font-weight: 300;
+  }
