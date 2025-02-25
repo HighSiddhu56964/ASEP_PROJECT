@@ -1,351 +1,694 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teen Finance</title>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        .auth-links {
-    display: flex;
-    gap: 10px;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>SavyMoney - Teen Financial Management</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    #stock-news-container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    background: white;
 }
-.auth-links a {
-    color: white;
+
+.news-item {
+    margin-bottom: 15px;
+}
+
+.news-item h3 a {
     text-decoration: none;
-    padding: 14px 20px;
-    background-color: #4CAF50;
+    color: #007bff;
+}
+
+.news-item img {
+    max-width: 100%;
     border-radius: 5px;
 }
-.auth-links a:hover {
-    background-color: #45a049;
-}
-.form-container {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.form-container.active {
-    display: block;
-}
-.close-btn {
-    float: right;
-    cursor: pointer;
-}
 
-
-        *{
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        }
-        body {
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-        }
-        header {
-            
-            display: flex;
-            align-items: center; 
-            background-color: #4CAF50;
-            color: white;
-            font-size: larger;
-            padding: 1px;           
-        }
-        
-        h1{           
-            margin-left: 27%;
-        }
-
-        .logo {
-            height: 100%;
-            display: flex;
-            align-items: center; 
-            margin-left: 1px;
-            
-        }
-
-        .logo img {
-            width: 150px; 
-            height: 115px; 
-        }
-
-        nav {
-            background-color: #333;
-            display: flex;
-            justify-content: space-between;
-        }
-        nav a {
-            flex: 1;
-            color: white;
-            padding: 14px 0;
-            text-align: center;
-            text-decoration: none;
-            border-right: 1px solid #575757;
-        }
-        nav a:last-child {
-            border-right: none;
-        }
-        nav a:hover {
-            background-color: #575757;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 40px;
-        }
-        .feature {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .feature:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-        }
-        .feature h2 {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-        }
-        .feature p {
-            font-size: 1em;
-            margin-bottom: 15px;
-        }
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #45a049;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 10px;
-        }
-        #page2 {
-            display: flex;           
-            width: 100%;
-            height: 100%;
-            align-items: stretch;
-        }
-        .video-container {
-        position: relative;
-        margin-left: 10%;
-        margin-right: 3%;
-        margin-top: 3%;
-        width: 100%;
-        height: auto; 
-        border-radius: 15px;
-        }
-        .video-container iframe {
-        padding-top: 10px ;
-        margin-left: 10%;
-        position: relative;
-        height: 250px;
-        width: 75%;
-        }
-        .content {
-        height: 100%;
-        margin-left: 5%;
-        width: 100%;
-        margin-top: 5%;
-        color: rgb(0, 20, 100);
-        border-radius: 15px;
-        overflow: hidden;   
-        font-size: x-large;  
-        font-weight: 300;       
-        }
-        .page2 {
-            height: 50%;
-            width: 100%;
-        }
-    </style>
-    <script>
-        <button class="login-btn" onclick="window.location.href='login.html';">Login</button>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener("click", function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute("href").substring(1);
-                    document.getElementById(targetId).scrollIntoView({
-                        behavior: "smooth"
-                    });
-                });
-            });
-
-            document.querySelectorAll(".feature .btn").forEach(button => {
-                button.addEventListener("click", function () {
-                    const sectionId = this.parentElement.id;
-                    alert(`You clicked on ${sectionId}. Redirecting to more information.`);
-                    window.location.href = document.querySelector(`nav a[href="#${sectionId}"]`)?.getAttribute("href") || "#";
-                });
-            });
-
-            const body = document.body;
-            const themeToggle = document.createElement("button");
-            themeToggle.textContent = "Toggle Dark Mode";
-            themeToggle.classList.add("btn");
-            themeToggle.style.position = "fixed";
-            themeToggle.style.bottom = "20px";
-            themeToggle.style.right = "20px";
-            document.body.appendChild(themeToggle);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     
-            themeToggle.addEventListener("click", function () {
-                body.classList.toggle("dark-mode");
-                localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
-            });
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: #fff;
+      line-height: 1.6;
+      min-height: 100vh;
+      background: 
+        linear-gradient(to bottom, rgba(26, 26, 26, 0) 60%, rgba(26, 26, 26, 0.5) 100%),
+        url('https://i.ibb.co/Y76YBm1m/bg.jpg') center/cover fixed;
+      position: relative;
+      overflow-x: hidden;
+    }
     
-            if (localStorage.getItem("theme") === "dark") {
-                body.classList.add("dark-mode");
-            }
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(26, 26, 26, 0.85);
+      z-index: -1;
+    }
     
-            const darkModeStyles = document.createElement("style");
-            darkModeStyles.innerHTML = `
-                .dark-mode {
-                    background-color: #121212;
-                    color: #fff;
-                }
-                .dark-mode nav {
-                    background-color: #1f1f1f;
-                }
-                .dark-mode .feature {
-                    background-color: #333;
-                    color: #fff;
-                    border-color: #555;
-                }
-                .dark-mode footer {
-                    background-color: #1f1f1f;
-                }
-            `;
-            document.head.appendChild(darkModeStyles);
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem 5%;
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
     
-            setTimeout(() => {
-                alert("Welcome to Teen Finance Manager! Explore and take control of your finances.");
-            }, 1000);
-        });
-        document.addEventListener("DOMContentLoaded", function () {
-    // Existing script content...
-
-    // Toggle forms
-  
-});
-
-    </script>
+    .navbar.scrolled {
+      background: rgba(26, 26, 26, 0.9);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
     
+    body.light-mode .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-brand {
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: #0074E4;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .auth-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .auth-links a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: 0.2s ease;
+    }
+    
+    .auth-links a:hover {
+      color: #0074E4;
+      background: rgba(0, 116, 228, 0.1);
+    }
+    
+    /* Light/Dark mode toggle button */
+    #mode-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: inherit;
+      margin-left: 1rem;
+    }
+    
+    @media(max-width:480px) {
+      .nav-brand { font-size: 1.2rem; }
+      .auth-links { display: none; }
+    }
+    
+    /* Hero Section */
+    .hero {
+      margin-top: 80px;
+      padding: 60px 20px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+    
+    .hero-content .article {
+      flex: 1;
+      text-align: left;
+    }
+    
+    .hero-content .article h1 {
+      font-size: 50px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    
+    .hero-content .article p {
+      color: #ccc;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+    
+    /* Sign Up Button inside the Article */
+    .btn-signup {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: #0074E4;
+      border: 1px solid #0074E4;
+      border-radius: 8px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    
+    .btn-signup:hover {
+      background: #0074E4;
+      color: #fff;
+    }
+    
+    .hero-content .hero-image {
+      flex: 1;
+      text-align: right;
+    }
+    
+    .hero-content .hero-image img {
+      max-width: 80%;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0, 116, 228, 0.3);
+      transition: transform 0.3s ease;
+    }
+    
+    @media(max-width:768px) {
+      .hero-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-content .hero-image {
+        text-align: center;
+      }
+    }
+    
+    /* Learn More Message */
+    .learn-more {
+      text-align: center;
+      margin-top: 23px;
+      font-weight: lighter;
+      font-size: 1.7rem;
+    }
+    
+    /* Features Grid & Cards */
+    .features-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .feature-card {
+      background: rgba(45, 45, 45, 0.8);
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 32px;
+      transition: transform 0.4s cubic-bezier(.175, .885, .32, 1.275);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      animation: float 6s ease-in-out infinite;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-card .btn {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 7px 15px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: #0074E4;
+      border: 1px solid #0074E4;
+      border-radius: 8px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    
+    .feature-card .btn:hover {
+      background: #0074E4;
+      color: #fff;
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: 0.5s;
+    }
+    
+    .feature-card:hover::before {
+      left: 100%;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(0, 116, 228, 0.2);
+      background: linear-gradient(45deg, rgba(45, 45, 45, 0.9), rgba(35, 35, 35, 0.9));
+    }
+    
+    .feature-icon {
+      font-size: 32px;
+      color: #0074E4;
+      margin-bottom: 24px;
+      transition: 0.3s ease;
+    }
+    
+    .feature-card:hover .feature-icon {
+      transform: rotate(15deg) scale(1.2);
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(10px, -20px); }
+      50% { transform: translate(-10px, 10px); }
+      75% { transform: translate(10px, -10px); }
+    }
+    
+    .feature-card:nth-child(odd) {
+      animation: slideFromLeft 1s ease-out forwards;
+    }
+    
+    .feature-card:nth-child(even) {
+      animation: slideFromRight 1s ease-out forwards;
+    }
+    
+    @keyframes slideFromLeft {
+      from { opacity: 0; transform: translateX(-100%); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes slideFromRight {
+      from { opacity: 0; transform: translateX(100%); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    /* Footer */
+    footer {
+      background: rgba(26, 26, 26, 0.95);
+      padding: 64px 20px 32px;
+      margin-top: 80px;
+      border-top: 1px solid #333;
+    }
+    
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid #333;
+    }
+    
+    .footer-section h4 {
+      color: #0074E4;
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+    
+    .footer-links a {
+      color: #888;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: #0074E4;
+    }
+    
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 32px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .footer-bottom p {
+      color: #888;
+      font-size: 0.9rem;
+    }
+    
+    .footer-legal-links {
+      display: flex;
+      gap: 24px;
+    }
+    
+    .footer-legal-links a {
+      color: #888;
+      text-decoration: none;
+      font-size: 0.9rem;
+      position: relative;
+    }
+    
+    .footer-legal-links a:not(:last-child)::after {
+      content: "|";
+      position: absolute;
+      right: -14px;
+      color: #888;
+    }
+    
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: #0074E4;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 116, 228, 0.3);
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      z-index: 1001;
+    }
+    
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    @media(max-width:768px) {
+      .navbar { padding: 1rem 5%; }
+      .auth-links { gap: 1rem; }
+      .auth-links a { padding: 0.5rem 1rem; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .back-to-top { padding: 8px 16px; font-size: 0.8rem; bottom: 20px; right: 20px; }
+    }
+    
+    @media(max-width:480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    
+    /* LIGHT MODE OVERRIDES */
+    body.light-mode {
+      color: #333;
+      background: 
+        linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.8) 100%),
+        url('https://i.ibb.co/Y76YBm1m/bg.jpg') center/cover fixed;
+    }
+    
+    body.light-mode::after {
+      background: rgba(255, 255, 255, 0.85);
+    }
+    
+    body.light-mode .navbar { background: transparent; }
+    
+    body.light-mode .nav-brand { color: #0074E4; }
+    
+    body.light-mode .auth-links a { color: rgba(0, 0, 0, 0.9); }
+    
+    body.light-mode .auth-links a:hover {
+      color: #0074E4;
+      background: rgba(0, 116, 228, 0.1);
+    }
+    
+    body.light-mode .hero-content .article p { color: #555; }
+    
+    body.light-mode .feature-card {
+      background: rgba(245, 245, 245, 0.9);
+      border: 1px solid #ccc;
+    }
+    
+    body.light-mode .feature-card:hover {
+      background: linear-gradient(45deg, rgba(245, 245, 245, 0.95), rgba(235, 235, 235, 0.95));
+      box-shadow: 0 15px 30px rgba(0, 116, 228, 0.2);
+    }
+    
+    body.light-mode .feature-icon { color: #0074E4; }
+    
+    body.light-mode footer {
+      background: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid #ccc;
+    }
+    
+    body.light-mode .footer-section h4 { color: #0074E4; }
+    
+    body.light-mode .footer-links a { color: #555; }
+    
+    body.light-mode .footer-links a:hover { color: #0074E4; }
+    
+    body.light-mode .footer-bottom p,
+    body.light-mode .footer-legal-links a { color: #555; }
+    
+    body.light-mode .back-to-top {
+      background: #0074E4;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-    <div class="auth-links">
+  <nav class="navbar">
+    <div class="nav-brand">💰 SavyMoney</div>
+    <div style="display: flex; align-items: center;">
+      <div class="auth-links">
+        <a href="#features">Features</a>
         <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
+        <a href="register.html">Get Started</a>
+      </div>
+      <button id="mode-toggle" title="Toggle light/dark mode">🌙</button>
     </div>
-    <header>
-        
-        <div class="logo">
-        <img src="https://i.postimg.cc/3J40vRLg/Screenshot-2025-01-16-230254-removebg-preview.png">
-        </div>
-        <h1>Personal Finance Manager</h1>
-        
-    </header>
-    <nav>
-        <a href="#budgeting"><b> Budgeting </b> </a>
-        <a href="finance_tracking.html" target="_blank"><b> Finance Tracking </b></a>
-        <a href="faq.html" target="_blank"><b> FAQs </b> </a>
-        <a href="setgoal.html"><b> Set Goals </b> </a>
-        <a href="billreminder.html" target="_blank"> <b> Bill Reminders </b> </a>
-        <a href="conversionrate.html" target="_blank"> <b> Conversion Rates </b> </a>
-        <a href="aboutus/aboutus.html" target="_blank"> <b> About Us </b> </a>
-    </nav>
+  </nav>
+  
+  <!-- Hero Section with Article and Image -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="article">
+        <h1>Empowering Teens through Financial Literacy</h1>
+        <p>
+          Understand personal finance essentials with SavyMoney. Our interactive tools and practical advice help you manage budgets, save money, and track expenses for a smarter future.
+        </p>
+        <a href="register.html" class="btn-signup">Sign Up Now</a>
+      </div>
+      <div class="hero-image">
+        <img src="https://i.ibb.co/60fft04j/openart-image-Sjl-js-XF-1740481066210-raw.jpg" alt="Finance" />
+      </div>
+    </div>
+    <div class="learn-more">
+      <h2>Learn what SavyMoney can do for you.</h2>
+    </div>
+  </section>
+  
+  <!-- Features Grid -->
+  <section class="features-grid" id="features">
+    <div class="feature-card" id="budgeting">
+      <i class="fas fa-chart-line feature-icon"></i>
+      <h3>Budgeting</h3>
+      <p>Create and manage personalized budgets with ease</p>
+      <a class="btn" href="budgoeting.html" target="_blank">Learn More</a>
+    </div>
+    <div class="feature-card" id="finance-tracking">
+      <i class="fas fa-wallet feature-icon"></i>
+      <h3>Finance Tracking</h3>
+      <p>Monitor all your transactions in real-time</p>
+      <a class="btn" href="finance_tracking.html" target="_blank">Learn More</a>
+    </div>
+    <div class="feature-card" id="set-goals">
+      <i class="fas fa-bullseye feature-icon"></i>
+      <h3>Set Goals</h3>
+      <p>Define and achieve your financial targets</p>
+      <a class="btn" href="setgoal.html" target="_blank">Learn More</a>
+    </div>
+    <div class="feature-card" id="bill-reminders">
+      <i class="fas fa-bell feature-icon"></i>
+      <h3>Bill Reminders</h3>
+      <p>Never miss important payment deadlines</p>
+      <a class="btn" href="billreminder.html" target="_blank">Learn More</a>
+    </div>
+    <div class="feature-card" id="faqs">
+      <i class="fas fa-question-circle feature-icon"></i>
+      <h3>FAQs</h3>
+      <p>Instant answers to common financial questions</p>
+      <a class="btn" href="faq.html" target="_blank">Learn More</a>
+    </div>
+    <div class="feature-card" id="conversion-rates">
+      <i class="fas fa-coins feature-icon"></i>
+      <h3>Conversion Rates</h3>
+      <p>Real-time currency exchange information</p>
+      <a class="btn" href="conversionrate.html" target="_blank">Learn More</a>
+    </div>
+    <div class="feature-card" id="about-us">
+      <i class="fas fa-info-circle feature-icon"></i>
+      <h3>About Us</h3>
+      <p>Learn about our mission and values</p>
+      <a class="btn" href="aboutus.html" target="_blank">Learn More</a>
+    </div>
+    <div class="feature-card" id="savings-plans">
+      <i class="fas fa-piggy-bank feature-icon"></i>
+      <h3>Savings Plans</h3>
+      <p>Automated savings strategies that work</p>
+      <a class="btn" href="savings_plans.html" target="_blank">Learn More</a>
+    </div>
+    <div class="feature-card" id="analytics">
+      <i class="fas fa-chart-pie feature-icon"></i>
+      <h3>Analytics</h3>
+      <p>Detailed spending insights and reports</p>
+      <a class="btn" href="analytics.html" target="_blank">Learn More</a>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>Products</h4>
+        <ul class="footer-links">
+          <li><a href="#budgeting">Budgeting</a></li>
+          <li><a href="#finance-tracking">Finance Tracking</a></li>
+          <li><a href="#set-goals">Goal Setting</a></li>
+          <li><a href="#savings-plans">Savings Plans</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul class="footer-links">
+          <li><a href="#faqs">FAQs</a></li>
+        </ul>
+      </div>
+      <div id="stock-news-container">
+        <h2>Live Stock Market News</h2>
+        <div id="stock-news"></div>
+    </div>
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="#about-us">About Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="#privacy">Privacy Policy</a></li>
+          <li><a href="#terms">Terms of Service</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#accessibility">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 SavyMoney. All rights reserved.</p>
+      <div class="footer-legal-links">
+        <a href="#terms">Terms of service</a>
+        <a href="#privacy">Privacy policy</a>
+        <a href="#security">Safety & security</a>
+      </div>
+    </div>
+  </footer>
+  
+  <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back on Top</button>
+  
+  <script>
+    async function fetchStockNews() {
+    const apiKey = 'GMHYEMWHU3J108MK';  // Replace with your actual API key
+    const url = `https://newsapi.org/v2/everything?q=stock%20market&language=en&sortBy=publishedAt&apiKey=${apiKey}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        let newsHTML = '';
+        data.articles.slice(0, 5).forEach(article => {
+            newsHTML += `
+                <div class="news-item">
+                    <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+                    <p>${article.description}</p>
+                    <img src="${article.urlToImage}" alt="News Image" width="200">
+                    <p><small>${new Date(article.publishedAt).toLocaleString()}</small></p>
+                </div>
+                <hr>
+            `;
+        });
+
+        document.getElementById('stock-news').innerHTML = newsHTML;
+    } catch (error) {
+        console.error("Error fetching stock news:", error);
+        document.getElementById('stock-news').innerHTML = "<p>Failed to load news.</p>";
+    }
+}
+
+// Call function on page load
+fetchStockNews();
+
+    // Show/hide Back-to-top button
+    window.addEventListener('scroll', () => {
+      document.querySelector('.back-to-top').classList.toggle('show', window.scrollY > 300);
+    });
     
-    <div class="page2">
-    <div id="page2">
-        <div class="content">
-            <center>
-            WELCOME
-            </center>
-        </div>
-        <div class="video-container">
-            <iframe 
-                src="https://www.youtube.com/embed/MK0fVwFAU94"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-        </div>
-    </div>
-    </div>
-    <div class="container">
-        <div class="feature" id="budgeting">
-            <h2>Budgeting</h2>
-            <p>Plan your monthly budget and track your expenses effectively.</p>
-            <button class="btn">Learn More</button>
-        </div>
-        <div class="feature" id="tracking">
-            <h2>Finance Tracking</h2>
-            <p>Keep a record of your daily income and expenses.</p>
-            <button class="btn">Learn More</button>
-        </div>
-        <div class="feature" id="faq">
-            <h2>Frequently Asked Questions</h2>
-            <p>Find answers to the most common questions about managing finances.</p>
-            <button class="btn">Learn More</button>
-        </div>
-        <div class="feature" id="goals">
-            <h2>Set Spending Limits</h2>
-            <p>Define your financial goals and stick to your spending limits.</p>
-            <button class="btn">Learn More</button>
-        </div>
-        <div class="feature" id="reminders">
-            <h2>Bill Reminders</h2>
-            <p>Never miss a payment with our reminder system.</p>
-            <button class="btn">Learn More</button>
-        </div>
-        <div class="feature" id="conversion">
-            <h2>Conversion Rates</h2>
-            <p>Get the latest currency conversion rates in real-time.</p>
-            <button class="btn">Learn More</button>
-        </div>
-        <div class="feature" id="about">
-            <h2>About Us</h2>
-            <p>Learn more about our mission to help teenagers manage their finances responsibly.</p>
-            <button class="btn">Learn More</button>
-        </div>
-    </div>
-    <footer>
-        <p>&copy; 2025 Teen Finance Management. All Rights Reserved.</p>
-    </footer>
-   
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="fuK6YtRQSpvS_ydUpjRAg";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+
     
-    <div id="registerFormContainer" class="form-container">
-        <span class="close-btn">&times;</span>
-        <h2>Register</h2>
-        <form id="registerForm" action="/register" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Register</button>
-        </form>
-    </div>
-    <script src="js/script.js"></script>
+    // Set animation delay for feature cards
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.feature-card').forEach((card, i) => {
+        card.style.animationDelay = `${i * 0.2}s`;
+      });
+    });
+    
+    // Light/Dark mode toggle
+    const modeToggle = document.getElementById('mode-toggle');
+    modeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      modeToggle.textContent = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
+    });
+    
+    // Dynamic navbar: add "scrolled" class when the user scrolls down
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
 </body>
 </html>
+
