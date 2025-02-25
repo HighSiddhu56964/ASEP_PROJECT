@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/678247f0af5bfec1dbea1e61/1ihaei1q4';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Reminders</title>
+    <style>
+        *{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .bill-list {
+            margin-top: 20px;
+        }
+        .bill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f1f1;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .bill-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .bill-details span {
+            margin: 2px 0;
+        }
+        .mark-paid {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 8px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .mark-paid:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Bill Reminders</h1>
+
+    <!-- Form to Add New Bill -->
+    <form id="billForm">
+        <label for="billName">Bill Name:</label>
+        <input type="text" id="billName" placeholder="Enter bill name" required>
+        
+        <label for="billAmount">Amount:</label>
+        <input type="number" id="billAmount" placeholder="Enter amount" required>
+        
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" required>
+        
+        <label for="category">Category:</label>
+        <select id="category">
+            <option value="Utilities">Utilities</option>
+            <option value="Rent">Rent</option>
+            <option value="Subscription">Subscription</option>
+            <option value="Other">Other</option>
+        </select>
+        
+        <button type="submit">Add Reminder</button>
+    </form>
+
+    <!-- Bill List -->
+    <div class="bill-list" id="billList">
+        <h2>Upcoming Bills</h2>
+        <!-- Bills will be dynamically added here -->
+    </div>
+</div>
+
+<script>
+    const billForm = document.getElementById('billForm');
+    const billList = document.getElementById('billList');
+
+    // Event listener to handle bill addition
+    billForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get form values
+        const billName = document.getElementById('billName').value;
+        const billAmount = document.getElementById('billAmount').value;
+        const dueDate = document.getElementById('dueDate').value;
+        const category = document.getElementById('category').value;
+
+        // Create a new bill item
+        const billItem = document.createElement('div');
+        billItem.className = 'bill-item';
+
+        // Add bill details
+        billItem.innerHTML = `
+            <div class="bill-details">
+                <span><strong>Name:</strong> ${billName}</span>
+                <span><strong>Amount:</strong> ₹${billAmount}</span>
+                <span><strong>Due Date:</strong> ${dueDate}</span>
+                <span><strong>Category:</strong> ${category}</span>
+            </div>
+            <button class="mark-paid" onclick="markAsPaid(this)">Mark as Paid</button>
+        `;
+
+        // Append the bill to the list
+        billList.appendChild(billItem);
+
+        // Clear form fields
+        billForm.reset();
+    });
+
+    // Function to mark a bill as paid
+    function markAsPaid(button) {
+        const billItem = button.parentElement;
+        billItem.style.textDecoration = 'line-through';
+        button.remove();
+    }
+</script>
+
+</body>
+</html>

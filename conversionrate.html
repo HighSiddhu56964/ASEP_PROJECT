@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/678247f0af5bfec1dbea1e61/1ihaei1q4';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter & Gold Rates</title>
+    <style>
+        *{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0px;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #45a049;
+            color: white;
+            font-size: larger;
+            text-align: center;
+            padding: 2px ;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #45a049;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1c7520;
+        }
+        .result {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Conversion Rates</h2>
+    </header>
+    <br>
+    <br>
+
+<div class="container">
+    <h1>Currency Converter & Gold Rates</h1>
+    
+    <!-- Currency Converter -->
+    <div>
+        <h2>Currency Converter</h2>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount">
+        
+        <label for="fromCurrency">From:</label>
+        <select id="fromCurrency">
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+        </select>
+        
+        <label for="toCurrency">To:</label>
+        <select id="toCurrency">
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+        </select>
+        
+        <button onclick="convertCurrency()">Convert</button>
+        <div class="result" id="conversionResult"></div>
+    </div>
+    
+    <!-- Gold Rates -->
+    <div>
+        <h2>Gold Rates</h2>
+        <button onclick="fetchGoldRates()">Check Gold Rates</button>
+        <div class="result" id="goldRateResult"></div>
+    </div>
+</div>
+
+<script>
+    // Function to convert currency
+    async function convertCurrency() {
+        const amount = document.getElementById("amount").value;
+        const fromCurrency = document.getElementById("fromCurrency").value;
+        const toCurrency = document.getElementById("toCurrency").value;
+
+        if (!amount) {
+            alert("Please enter an amount.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
+            const data = await response.json();
+            const rate = data.rates[toCurrency];
+            const convertedAmount = (amount * rate).toFixed(2);
+            document.getElementById("conversionResult").textContent = 
+                `${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}`;
+        } catch (error) {
+            document.getElementById("conversionResult").textContent = 
+                "Error fetching exchange rates. Please try again later.";
+        }
+    }
+
+    // Function to fetch gold rates
+    async function fetchGoldRates() {
+        try {
+            const response = await fetch('https://www.goldapi.io/api/XAU/USD', {
+                headers: {
+                    'x-access-token': 'goldapi-3zv68sm5v0fv1c-io'
+                }
+            });
+            const data = await response.json();
+            document.getElementById("goldRateResult").textContent = 
+                `Current Gold Rate: $${data.price} per ounce`;
+        } catch (error) {
+            document.getElementById("goldRateResult").textContent = 
+                "Error fetching gold rates. Please try again later.";
+        }
+    }
+</script>
+
+</body>
+</html>

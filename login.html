@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-container {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-container label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #bbbbbb;
+            color: #000000;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #444444;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+       
+        .login-container button:hover {
+            background-color: #666666;
+        }
+
+        .error {
+            color: #ff0000;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        body, .login-container {
+            animation: fadeIn 1.5s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm" onsubmit="return validateForm()">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            <span class="error" id="usernameError">Username is required.</span>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <span class="error" id="passwordError">Password is required.</span>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var usernameError = document.getElementById('usernameError');
+            var passwordError = document.getElementById('passwordError');
+
+            usernameError.style.display = 'none';
+            passwordError.style.display = 'none';
+
+            if (username === '') {
+                usernameError.style.display = 'block';
+                return false;
+            }
+
+            if (password === '') {
+                passwordError.style.display = 'block';
+                return false;
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
+</body>
+</html>

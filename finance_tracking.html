@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/678247f0af5bfec1dbea1e61/1ihaei1q4';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    document.getElementById('transaction-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const description = document.getElementById('description').value;
+    const amount = parseFloat(document.getElementById('amount').value);
+    const type = document.getElementById('type').value;
+    const date = new Date().toLocaleDateString();
+    
+    addTransaction(date, description, amount, type);
+    updateOverview();
+    
+    document.getElementById('transaction-form').reset();
+});
+
+let transactions = [];
+
+function addTransaction(date, description, amount, type) {
+    const transaction = { date, description, amount, type };
+    transactions.push(transaction);
+    const transactionList = document.getElementById('transaction-list');
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${date}</td>
+        <td>${description}</td>
+        <td>${amount}</td>
+        <td>${type}</td>
+    `;
+    transactionList.appendChild(row);
+}
+
+function updateOverview() {
+    const totalIncome = transactions
+        .filter(t => t.type === 'income')
+        .reduce((sum, t) => sum + t.amount, 0);
+    const totalExpenses = transactions
+        .filter(t => t.type === 'expense')
+        .reduce((sum, t) => sum + t.amount, 0);
+    const balance = totalIncome - totalExpenses;
+
+    document.getElementById('total-income').textContent = totalIncome;
+    document.getElementById('total-expenses').textContent = totalExpenses;
+    document.getElementById('balance').textContent = balance;
+}
+
+    </script>
+    <script>
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+            updateUI();
+      
+            document.getElementById("transaction-form").addEventListener("submit", function (e) {
+                e.preventDefault();
+                addTransaction();
+            });
+      
+            function addTransaction() {
+                let description = document.getElementById("description").value.trim();
+                let amount = parseFloat(document.getElementById("amount").value);
+                let type = document.getElementById("type").value;
+                
+                if (!description || isNaN(amount) || amount <= 0) {
+                    alert("Please enter a valid description and amount.");
+                    return;
+                }
+      
+                let transaction = {
+                    date: new Date().toLocaleDateString(),
+                    description,
+                    amount: type === "expense" ? -amount : amount,
+                    type
+                };
+      
+                transactions.push(transaction);
+                localStorage.setItem("transactions", JSON.stringify(transactions));
+                updateUI();
+                document.getElementById("transaction-form").reset();
+            }
+      
+            function updateUI() {
+                let income = 0, expenses = 0;
+                let list = document.getElementById("transaction-list");
+                list.innerHTML = "";
+      
+                transactions.forEach(transaction => {
+                    let row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${transaction.date}</td>
+                        <td>${transaction.description}</td>
+                        <td>₹${Math.abs(transaction.amount)}</td>
+                        <td>${transaction.type}</td>
+                    `;
+                    list.appendChild(row);
+                    transaction.amount > 0 ? (income += transaction.amount) : (expenses += transaction.amount);
+                });
+      
+                document.getElementById("total-income").innerText = income;
+                document.getElementById("total-expenses").innerText = Math.abs(expenses);
+                document.getElementById("balance").innerText = income + expenses;
+            }
+      
+            let clearBtn = document.createElement("button");
+            clearBtn.innerText = "Clear Transactions";
+            clearBtn.style.marginTop = "20px";
+            clearBtn.onclick = function () {
+                if (confirm("Are you sure you want to clear all transactions?")) {
+                    localStorage.removeItem("transactions");
+                    transactions = [];
+                    updateUI();
+                }
+            };
+            document.body.appendChild(clearBtn);
+    
+            setTimeout(() => {
+                alert("Welcome to your Finance Tracker!");
+            }, 500);
+        });
+      </script>
+      
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Tracker</title>
+    <style>
+        *{
+font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+header {
+    font-family: cursive;
+    background-color: #45a049;
+    color: white;
+    font-size: larger;
+    text-align: center;
+    padding: 10.5px ;
+}
+#overview {
+   
+    font: large;
+    
+}
+main {
+    padding: 1em;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+h2 {
+    border-bottom: 2px solid #00e86c;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+form label {
+    grid-column: span 2;
+}
+
+form input, form select, form button {
+    padding: 0.5em;
+}
+
+form button {
+    grid-column: span 2;
+    background-color: #00e86c;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #217c4c;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 0.5em;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Finance Tracker</h1>
+    </header>
+    <main>
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>Total Income: ₹<span id="total-income">0</span></p>
+            <p>Total Expenses: ₹<span id="total-expenses">0</span></p>
+            <p>Balance: ₹<span id="balance">0</span></p>
+            <br>
+        </section>
+        <section id="add-transaction">
+            <h2>Add Transaction</h2>
+            <form id="transaction-form">
+                <label for="description">Description:</label>
+                <input type="text" id="description" required>
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" required>
+                <label for="type">Type:</label>
+                <select id="type" required>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+                <button type="submit">Add Transaction</button>
+            </form>
+        </section>
+        <section id="transactions">
+            <h2>Transactions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody id="transaction-list">
+                    
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="fintrack.js"></script>
+</body>
+</html>
