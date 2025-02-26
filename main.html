@@ -24,7 +24,76 @@
       position: relative;
       overflow-x: hidden;
     }
-    
+.login-btn {
+            padding: 8px 16px;
+            font-size: 16px;
+            background-color: #0074e4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: -2%;
+        }
+        .login-btn:hover {
+            background-color: #0074E4;
+        }
+        /* Popup Background */
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        /* Popup Box */
+        .popup-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+            position: relative;
+        }
+        .popup-box h2 {
+            margin-bottom: 15px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .popup-login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #0074E4;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .popup-login-btn:hover {
+            background-color: #0074E4;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: red;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
     body::after {
       content: '';
       position: fixed;
@@ -164,7 +233,7 @@
     
     .hero-content .hero-image img {
       max-width: 80%;
-      border-radius: 15%;
+      border-radius: 50%;
       box-shadow: 0 4px 12px rgba(0, 116, 228, 0.3);
       transition: transform 0.3s ease;
     }
@@ -467,8 +536,20 @@
     <div style="display: flex; align-items: center;">
       <div class="auth-links">
         <a href="#features">Features</a>
-        <a href="login.html">Login</a>
-        <a href="register.html">Get Started</a>
+        <a href="#login">  <button class="login-btn" onclick="openPopup()">Login</button>
+
+    <!-- Login Popup -->
+    <div class="popup-container" id="popup">
+        <div class="popup-box">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            <h2>Login</h2>
+            <input type="text" id="username" class="input-field" placeholder="Username" required>
+            <input type="password" id="password" class="input-field" placeholder="Password" required>
+            <p id="error-message" class="error"></p>
+            <button class="popup-login-btn" onclick="login()">Login</button>
+        </div>
+    </div> </a>
+        <a href="#signup">Get Started</a>
       </div>
       <button id="mode-toggle" title="Toggle light/dark mode">🌙</button>
     </div>
@@ -482,7 +563,7 @@
         <p>
           Understand personal finance essentials with SavyMoney. Our interactive tools and practical advice help you manage budgets, save money, and track expenses for a smarter future.
         </p>
-        <a href="register.html" class="btn-signup">Sign Up Now</a>
+        <a href="#signup" class="btn-signup">Sign Up Now</a>
       </div>
       <div class="hero-image">
         <img src="https://i.ibb.co/60fft04j/openart-image-Sjl-js-XF-1740481066210-raw.jpg" alt="Finance" />
@@ -499,55 +580,55 @@
       <i class="fas fa-chart-line feature-icon"></i>
       <h3>Budgeting</h3>
       <p>Create and manage personalized budgets with ease</p>
-      <a class="btn" href="budgoeting.html" target="_blank">Learn More</a>
+      <a class="btn" href="budgeting.html">Learn More</a>
     </div>
     <div class="feature-card" id="finance-tracking">
       <i class="fas fa-wallet feature-icon"></i>
       <h3>Finance Tracking</h3>
       <p>Monitor all your transactions in real-time</p>
-      <a class="btn" href="finance_tracking.html" target="_blank">Learn More</a>
+      <a class="btn" href="finance_tracking.html">Learn More</a>
     </div>
     <div class="feature-card" id="set-goals">
       <i class="fas fa-bullseye feature-icon"></i>
       <h3>Set Goals</h3>
       <p>Define and achieve your financial targets</p>
-      <a class="btn" href="setgoal.html" target="_blank">Learn More</a>
+      <a class="btn" href="setgoal.html">Learn More</a>
     </div>
     <div class="feature-card" id="bill-reminders">
       <i class="fas fa-bell feature-icon"></i>
       <h3>Bill Reminders</h3>
       <p>Never miss important payment deadlines</p>
-      <a class="btn" href="billreminder.html" target="_blank">Learn More</a>
+      <a class="btn" href="billreminder.html">Learn More</a>
     </div>
     <div class="feature-card" id="faqs">
       <i class="fas fa-question-circle feature-icon"></i>
       <h3>FAQs</h3>
       <p>Instant answers to common financial questions</p>
-      <a class="btn" href="faq.html" target="_blank">Learn More</a>
+      <a class="btn" href="faq.html">Learn More</a>
     </div>
     <div class="feature-card" id="conversion-rates">
       <i class="fas fa-coins feature-icon"></i>
       <h3>Conversion Rates</h3>
       <p>Real-time currency exchange information</p>
-      <a class="btn" href="conversionrate.html" target="_blank">Learn More</a>
+      <a class="btn" href="conversionrate.html">Learn More</a>
     </div>
     <div class="feature-card" id="about-us">
       <i class="fas fa-info-circle feature-icon"></i>
       <h3>About Us</h3>
       <p>Learn about our mission and values</p>
-      <a class="btn" href="aboutus.html" target="_blank">Learn More</a>
+      <a class="btn" href="aboutus/aboutus.html">Learn More</a>
     </div>
     <div class="feature-card" id="savings-plans">
       <i class="fas fa-piggy-bank feature-icon"></i>
       <h3>Savings Plans</h3>
       <p>Automated savings strategies that work</p>
-      <a class="btn" href="savings_plans.html" target="_blank">Learn More</a>
+      <a class="btn" href="savings_plans.html">Learn More</a>
     </div>
     <div class="feature-card" id="analytics">
       <i class="fas fa-chart-pie feature-icon"></i>
       <h3>Analytics</h3>
       <p>Detailed spending insights and reports</p>
-      <a class="btn" href="analytics.html" target="_blank">Learn More</a>
+      <a class="btn" href="analytics.html">Learn More</a>
     </div>
   </section>
   
@@ -603,9 +684,6 @@
       document.querySelector('.back-to-top').classList.toggle('show', window.scrollY > 300);
     });
     
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="fuK6YtRQSpvS_ydUpjRAg";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
-
-    
     // Set animation delay for feature cards
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.feature-card').forEach((card, i) => {
@@ -629,6 +707,27 @@
         navbar.classList.remove('scrolled');
       }
     });
+function openPopup() {
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        function login() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var errorMessage = document.getElementById("error-message");
+
+            if (username === "admin" && password === "1234") {
+                alert("Login successful!");
+                closePopup();
+                window.location.href = "dashboard.html"; // Redirect after login
+            } else {
+                errorMessage.textContent = "Invalid username or password!";
+            }
+        }
   </script>
 </body>
 </html>
