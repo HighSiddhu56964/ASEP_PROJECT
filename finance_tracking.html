@@ -1,266 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/678247f0af5bfec1dbea1e61/1ihaei1q4';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    document.getElementById('transaction-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const description = document.getElementById('description').value;
-    const amount = parseFloat(document.getElementById('amount').value);
-    const type = document.getElementById('type').value;
-    const date = new Date().toLocaleDateString();
-    
-    addTransaction(date, description, amount, type);
-    updateOverview();
-    
-    document.getElementById('transaction-form').reset();
-});
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Finance Tracker</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
 
-let transactions = [];
+    body {
+      background: linear-gradient(
+          to top,
+          rgba(248, 249, 250, 1) 20%,
+          rgba(248, 249, 250, 0.5) 80%
+        ),
+        url('https://i.ibb.co/VWHbdcjW/fintrackbg.jpg') center/cover fixed;
+      color: #212529;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-function addTransaction(date, description, amount, type) {
-    const transaction = { date, description, amount, type };
-    transactions.push(transaction);
-    const transactionList = document.getElementById('transaction-list');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-        <td>${date}</td>
-        <td>${description}</td>
-        <td>${amount}</td>
-        <td>${type}</td>
-    `;
-    transactionList.appendChild(row);
-}
+    body.dark-mode {
+      background: linear-gradient(
+          to top,
+          rgba(26, 29, 33, 1) 20%,
+          rgba(26, 29, 33, 0.7) 80%
+        ),
+        url('https://i.ibb.co/VWHbdcjW/fintrackbg.jpg') center/cover fixed;
+      color: #e9ecef;
+    }
 
-function updateOverview() {
-    const totalIncome = transactions
-        .filter(t => t.type === 'income')
-        .reduce((sum, t) => sum + t.amount, 0);
-    const totalExpenses = transactions
-        .filter(t => t.type === 'expense')
-        .reduce((sum, t) => sum + t.amount, 0);
-    const balance = totalIncome - totalExpenses;
+    /* HEADER */
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: transparent; /* start transparent */
+      box-shadow: none;        /* no shadow at the top */
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      z-index: 1000;
+    }
 
-    document.getElementById('total-income').textContent = totalIncome;
-    document.getElementById('total-expenses').textContent = totalExpenses;
-    document.getElementById('balance').textContent = balance;
-}
+    /* The text colors in header can stay the same in dark mode. 
+       We won't override background in .dark-mode header 
+       because it's now handled by JS on scroll. */
+    body.dark-mode header {
+      color: #e9ecef;
+    }
 
-    </script>
-    <script>
-        
-        document.addEventListener("DOMContentLoaded", function () {
-            let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-            updateUI();
-      
-            document.getElementById("transaction-form").addEventListener("submit", function (e) {
-                e.preventDefault();
-                addTransaction();
-            });
-      
-            function addTransaction() {
-                let description = document.getElementById("description").value.trim();
-                let amount = parseFloat(document.getElementById("amount").value);
-                let type = document.getElementById("type").value;
-                
-                if (!description || isNaN(amount) || amount <= 0) {
-                    alert("Please enter a valid description and amount.");
-                    return;
-                }
-      
-                let transaction = {
-                    date: new Date().toLocaleDateString(),
-                    description,
-                    amount: type === "expense" ? -amount : amount,
-                    type
-                };
-      
-                transactions.push(transaction);
-                localStorage.setItem("transactions", JSON.stringify(transactions));
-                updateUI();
-                document.getElementById("transaction-form").reset();
-            }
-      
-            function updateUI() {
-                let income = 0, expenses = 0;
-                let list = document.getElementById("transaction-list");
-                list.innerHTML = "";
-      
-                transactions.forEach(transaction => {
-                    let row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${transaction.date}</td>
-                        <td>${transaction.description}</td>
-                        <td>₹${Math.abs(transaction.amount)}</td>
-                        <td>${transaction.type}</td>
-                    `;
-                    list.appendChild(row);
-                    transaction.amount > 0 ? (income += transaction.amount) : (expenses += transaction.amount);
-                });
-      
-                document.getElementById("total-income").innerText = income;
-                document.getElementById("total-expenses").innerText = Math.abs(expenses);
-                document.getElementById("balance").innerText = income + expenses;
-            }
-      
-            let clearBtn = document.createElement("button");
-            clearBtn.innerText = "Clear Transactions";
-            clearBtn.style.marginTop = "20px";
-            clearBtn.onclick = function () {
-                if (confirm("Are you sure you want to clear all transactions?")) {
-                    localStorage.removeItem("transactions");
-                    transactions = [];
-                    updateUI();
-                }
-            };
-            document.body.appendChild(clearBtn);
-    
-            setTimeout(() => {
-                alert("Welcome to your Finance Tracker!");
-            }, 500);
-        });
-      </script>
-      
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Tracker</title>
-    <style>
-        *{
-font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body {
-    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-}
-header {
-    font-family: cursive;
-    background-color: #45a049;
-    color: white;
-    font-size: larger;
-    text-align: center;
-    padding: 10.5px ;
-}
-#overview {
-   
-    font: large;
-    
-}
-main {
-    padding: 1em;
-    max-width: 800px;
-    margin: 20px auto;
-}
+    .nav-items {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
 
-h2 {
-    border-bottom: 2px solid #00e86c;
-    padding-bottom: 0.5em;
-    margin-bottom: 1em;
-}
+    .nav-brand {
+      font-weight: 600;
+      color: #2d3436;
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
 
-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 20px;
-}
+    .header-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
 
-form label {
-    grid-column: span 2;
-}
+    body.dark-mode .nav-brand,
+    body.dark-mode .header-title {
+      color: #e9ecef;
+    }
 
-form input, form select, form button {
-    padding: 0.5em;
-}
+    .mode-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: background 0.2s ease;
+    }
 
-form button {
-    grid-column: span 2;
-    background-color: #00e86c;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
+    .mode-toggle:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
 
-form button:hover {
-    background-color: #217c4c;
-}
+    body.dark-mode .mode-toggle:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1em;
-}
+    /* MAIN */
+    main {
+      max-width: 900px;
+      margin: 90px auto 2rem; /* Extra space under navbar */
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
-table, th, td {
-    border: 1px solid #ddd;
-    padding: 0.5em;
-}
+    body.dark-mode main {
+      background: rgba(26, 29, 33, 0.9);
+    }
 
-th {
-    background-color: #f2f2f2;
-}
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #4dabf7;
+      color: #2d3436;
+    }
 
+    body.dark-mode h2 {
+      color: #e9ecef;
+      border-color: #74c0fc;
+    }
 
-    </style>
+    form {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    input,
+    select {
+      padding: 0.8rem;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: white;
+    }
+
+    body.dark-mode input,
+    body.dark-mode select {
+      background: #2d3339;
+      border-color: #495057;
+      color: #e9ecef;
+    }
+
+    /* Button default (outline) */
+    button.btn {
+      background-color: transparent;
+      color: #4dabf7;
+      border: 1px solid #4dabf7; /* changed border width to 1px */
+      border-radius: 6px;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.5s ease, color 0.2s ease;
+    }
+
+    /* Button hover (filled) */
+    button.btn:hover {
+      background-color: #4dabf7;
+      color: #fff;
+    }
+
+    /* Add Transaction Button Specific Styles */
+    #transaction-form button.btn {
+      background-color: #4dabf7;
+      color: #fff;
+      width: 200px; /* decreased width */
+      display: block;
+      margin: 0 auto; /* center align */
+    }
+
+    #transaction-form button.btn:hover {
+      background-color: #0061b1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    body.dark-mode table {
+      background: #2d3339;
+    }
+
+    th,
+    td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    body.dark-mode th,
+    body.dark-mode td {
+      border-color: #495057;
+    }
+
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+
+    body.dark-mode th {
+      background: #343a40;
+    }
+
+    .buttons-row {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Ensure the last two buttons have the same width */
+    .buttons-row button {
+      width: 130px; /* Adjust as needed */
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Finance Tracker</h1>
-    </header>
-    <main>
-        <section id="overview">
-            <h2>Overview</h2>
-            <p>Total Income: ₹<span id="total-income">0</span></p>
-            <p>Total Expenses: ₹<span id="total-expenses">0</span></p>
-            <p>Balance: ₹<span id="balance">0</span></p>
-            <br>
-        </section>
-        <section id="add-transaction">
-            <h2>Add Transaction</h2>
-            <form id="transaction-form">
-                <label for="description">Description:</label>
-                <input type="text" id="description" required>
-                <label for="amount">Amount:</label>
-                <input type="number" id="amount" required>
-                <label for="type">Type:</label>
-                <select id="type" required>
-                    <option value="income">Income</option>
-                    <option value="expense">Expense</option>
-                </select>
-                <button type="submit">Add Transaction</button>
-            </form>
-        </section>
-        <section id="transactions">
-            <h2>Transactions</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Amount</th>
-                        <th>Type</th>
-                    </tr>
-                </thead>
-                <tbody id="transaction-list">
-                    
-                </tbody>
-            </table>
-        </section>
-    </main>
-    <script src="fintrack.js"></script>
+  <header>
+    <div class="nav-items">
+      <a href="main.html" class="nav-brand">← Back to Home</a>
+    </div>
+    <h1 class="header-title">Finance Tracker</h1>
+    <div class="nav-items">
+      <button class="mode-toggle" id="mode-toggle">🌞</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="overview">
+      <h2>Financial Overview</h2>
+      <p>Total Income: ₹<span id="total-income">0</span></p>
+      <p>Total Expenses: ₹<span id="total-expenses">0</span></p>
+      <p>Current Balance: ₹<span id="balance">0</span></p>
+    </section>
+
+    <section id="add-transaction">
+      <h2>New Transaction</h2>
+      <form id="transaction-form">
+        <input type="text" id="description" placeholder="Description" required />
+        <input type="number" id="amount" placeholder="Amount" required />
+        <select id="type" required>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+        <button type="submit" class="btn">Add Transaction</button>
+      </form>
+    </section>
+
+    <section id="transactions">
+      <h2>Transaction History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody id="transaction-list"></tbody>
+      </table>
+    </section>
+
+    <div class="buttons-row">
+      <button id="clear-btn" class="btn">Clear All</button>
+      <button id="print-btn" class="btn">Print Report</button>
+    </div>
+  </main>
+
+  <script>
+    // Dark Mode Toggle
+    const modeToggle = document.getElementById('mode-toggle');
+    const headerEl = document.querySelector('header');
+
+    function updateModeIcon(isDark) {
+      modeToggle.textContent = isDark ? '🌜' : '🌞';
+    }
+
+    modeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDark);
+      updateModeIcon(isDark);
+      // Force a scroll event update in case user toggles while scrolled
+      handleScroll();
+    });
+
+    // Initialize dark mode on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const isDark = localStorage.getItem('darkMode') === 'true';
+      document.body.classList.toggle('dark-mode', isDark);
+      updateModeIcon(isDark);
+      updateUI();
+    });
+
+    // Make the navbar progressively darker on scroll
+    window.addEventListener('scroll', handleScroll);
+
+    function handleScroll() {
+      const scrollY = window.scrollY;
+      const maxScroll = 200; // adjust for how quickly you want the navbar to darken
+
+      // fraction from 0 (top) to 1 (maxScroll or beyond)
+      const fraction = Math.min(scrollY / maxScroll, 1);
+
+      // If in dark mode: from rgba(26,29,33,0) to rgba(26,29,33,0.95)
+      // Otherwise: from rgba(255,255,255,0) to rgba(255,255,255,0.95)
+      if (document.body.classList.contains('dark-mode')) {
+        headerEl.style.backgroundColor = `rgba(26, 29, 33, ${fraction * 0.95})`;
+        headerEl.style.boxShadow = `0 2px 8px rgba(0,0,0,${fraction * 0.2})`;
+      } else {
+        headerEl.style.backgroundColor = `rgba(255, 255, 255, ${fraction * 0.95})`;
+        headerEl.style.boxShadow = `0 2px 8px rgba(0,0,0,${fraction * 0.05})`;
+      }
+    }
+
+    // Transaction Logic
+    let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+
+    function updateUI() {
+      const list = document.getElementById("transaction-list");
+      list.innerHTML = '';
+      
+      let income = 0, expenses = 0;
+      transactions.forEach(transaction => {
+        const row = document.createElement('tr');
+        row.innerHTML = 
+          `<td>${transaction.date}</td>
+          <td>${transaction.description}</td>
+          <td>₹${Math.abs(transaction.amount)}</td>
+          <td>${transaction.type}</td>`;
+        list.appendChild(row);
+        
+        if (transaction.amount > 0) {
+          income += transaction.amount;
+        } else {
+          expenses += transaction.amount;
+        }
+      });
+
+      document.getElementById("total-income").textContent = income;
+      document.getElementById("total-expenses").textContent = Math.abs(expenses);
+      document.getElementById("balance").textContent = income + expenses;
+
+      // Update header background in case we loaded mid-scroll
+      handleScroll();
+    }
+
+    document.getElementById("transaction-form").addEventListener('submit', e => {
+      e.preventDefault();
+      
+      const description = document.getElementById("description").value.trim();
+      const amount = parseFloat(document.getElementById("amount").value);
+      const type = document.getElementById("type").value;
+
+      if (!description || isNaN(amount)) return;
+
+      transactions.push({
+        date: new Date().toLocaleDateString(),
+        description,
+        amount: type === 'expense' ? -amount : amount,
+        type
+      });
+
+      localStorage.setItem("transactions", JSON.stringify(transactions));
+      updateUI();
+      e.target.reset();
+    });
+
+    document.getElementById("clear-btn").addEventListener('click', () => {
+      if (confirm("Clear all transactions?")) {
+        transactions = [];
+        localStorage.removeItem("transactions");
+        updateUI();
+      }
+    });
+
+    document.getElementById("print-btn").addEventListener('click', () => window.print());
+  </script>
 </body>
 </html>
+
+
