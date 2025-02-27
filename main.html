@@ -7,6 +7,21 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
+    #logout-btn {
+  background: #2f141b; /* Red color */
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#logout-btn:hover {
+  background: #d43f4e;
+  transform: scale(1.05);
+}
     * {
       margin: 0;
       padding: 0;
@@ -24,76 +39,7 @@
       position: relative;
       overflow-x: hidden;
     }
-.login-btn {
-            padding: 8px 16px;
-            font-size: 16px;
-            background-color: #0074e4;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: -2%;
-        }
-        .login-btn:hover {
-            background-color: #0074E4;
-        }
-        /* Popup Background */
-        .popup-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-        /* Popup Box */
-        .popup-box {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            width: 300px;
-            text-align: center;
-            position: relative;
-        }
-        .popup-box h2 {
-            margin-bottom: 15px;
-        }
-        .input-field {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .popup-login-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #0074E4;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .popup-login-btn:hover {
-            background-color: #0074E4;
-        }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 20px;
-            cursor: pointer;
-            color: red;
-        }
-        .error {
-            color: red;
-            font-size: 14px;
-        }
+    
     body::after {
       content: '';
       position: fixed;
@@ -207,24 +153,7 @@
       margin-bottom: 16px;
     }
     
-    /* Sign Up Button inside the Article */
-    .btn-signup {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      font-weight: 500;
-      text-decoration: none;
-      color: #0074E4;
-      border: 1px solid #0074E4;
-      border-radius: 8px;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
     
-    .btn-signup:hover {
-      background: #0074E4;
-      color: #fff;
-    }
     
     .hero-content .hero-image {
       flex: 1;
@@ -233,7 +162,7 @@
     
     .hero-content .hero-image img {
       max-width: 80%;
-      border-radius: 50%;
+      border-radius: 15%;
       box-shadow: 0 4px 12px rgba(0, 116, 228, 0.3);
       transition: transform 0.3s ease;
     }
@@ -532,24 +461,17 @@
 </head>
 <body>
   <nav class="navbar">
+    
+
     <div class="nav-brand">💰 SavyMoney</div>
     <div style="display: flex; align-items: center;">
       <div class="auth-links">
+        <a href="login.html" id="login-link">Login</a>
+        <button id="logout-btn" style="display: none;">Logout</button>
+        
         <a href="#features">Features</a>
-        <a href="#login">  <button class="login-btn" onclick="openPopup()">Login</button>
-
-    <!-- Login Popup -->
-    <div class="popup-container" id="popup">
-        <div class="popup-box">
-            <span class="close-btn" onclick="closePopup()">&times;</span>
-            <h2>Login</h2>
-            <input type="text" id="username" class="input-field" placeholder="Username" required>
-            <input type="password" id="password" class="input-field" placeholder="Password" required>
-            <p id="error-message" class="error"></p>
-            <button class="popup-login-btn" onclick="login()">Login</button>
-        </div>
-    </div> </a>
-        <a href="#signup">Get Started</a>
+        <a href="login.html">Login</a>
+      
       </div>
       <button id="mode-toggle" title="Toggle light/dark mode">🌙</button>
     </div>
@@ -563,7 +485,7 @@
         <p>
           Understand personal finance essentials with SavyMoney. Our interactive tools and practical advice help you manage budgets, save money, and track expenses for a smarter future.
         </p>
-        <a href="#signup" class="btn-signup">Sign Up Now</a>
+       
       </div>
       <div class="hero-image">
         <img src="https://i.ibb.co/60fft04j/openart-image-Sjl-js-XF-1740481066210-raw.jpg" alt="Finance" />
@@ -580,55 +502,55 @@
       <i class="fas fa-chart-line feature-icon"></i>
       <h3>Budgeting</h3>
       <p>Create and manage personalized budgets with ease</p>
-      <a class="btn" href="budgeting.html">Learn More</a>
+      <a class="btn" href="budgoeting.html" target="_blank">Learn More</a>
     </div>
     <div class="feature-card" id="finance-tracking">
       <i class="fas fa-wallet feature-icon"></i>
       <h3>Finance Tracking</h3>
       <p>Monitor all your transactions in real-time</p>
-      <a class="btn" href="finance_tracking.html">Learn More</a>
+      <a class="btn" href="finance_tracking.html" target="_blank">Learn More</a>
     </div>
     <div class="feature-card" id="set-goals">
       <i class="fas fa-bullseye feature-icon"></i>
       <h3>Set Goals</h3>
       <p>Define and achieve your financial targets</p>
-      <a class="btn" href="setgoal.html">Learn More</a>
+      <a class="btn" href="setgoal.html" target="_blank">Learn More</a>
     </div>
     <div class="feature-card" id="bill-reminders">
       <i class="fas fa-bell feature-icon"></i>
       <h3>Bill Reminders</h3>
       <p>Never miss important payment deadlines</p>
-      <a class="btn" href="billreminder.html">Learn More</a>
+      <a class="btn" href="billreminder.html" target="_blank">Learn More</a>
     </div>
     <div class="feature-card" id="faqs">
       <i class="fas fa-question-circle feature-icon"></i>
       <h3>FAQs</h3>
       <p>Instant answers to common financial questions</p>
-      <a class="btn" href="faq.html">Learn More</a>
+      <a class="btn" href="faq.html" target="_blank">Learn More</a>
     </div>
     <div class="feature-card" id="conversion-rates">
       <i class="fas fa-coins feature-icon"></i>
       <h3>Conversion Rates</h3>
       <p>Real-time currency exchange information</p>
-      <a class="btn" href="conversionrate.html">Learn More</a>
+      <a class="btn" href="conversionrate.html" target="_blank">Learn More</a>
     </div>
     <div class="feature-card" id="about-us">
       <i class="fas fa-info-circle feature-icon"></i>
       <h3>About Us</h3>
       <p>Learn about our mission and values</p>
-      <a class="btn" href="aboutus/aboutus.html">Learn More</a>
+      <a class="btn" href="aboutus.html" target="_blank">Learn More</a>
     </div>
     <div class="feature-card" id="savings-plans">
       <i class="fas fa-piggy-bank feature-icon"></i>
       <h3>Savings Plans</h3>
       <p>Automated savings strategies that work</p>
-      <a class="btn" href="savings_plans.html">Learn More</a>
+      <a class="btn" href="savings_plans.html" target="_blank">Learn More</a>
     </div>
     <div class="feature-card" id="analytics">
       <i class="fas fa-chart-pie feature-icon"></i>
       <h3>Analytics</h3>
       <p>Detailed spending insights and reports</p>
-      <a class="btn" href="analytics.html">Learn More</a>
+      <a class="btn" href="analytics.html" target="_blank">Learn More</a>
     </div>
   </section>
   
@@ -679,56 +601,67 @@
   <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back on Top</button>
   
   <script>
-    // Show/hide Back-to-top button
-    window.addEventListener('scroll', () => {
-      document.querySelector('.back-to-top').classList.toggle('show', window.scrollY > 300);
+    document.addEventListener("DOMContentLoaded", function () {
+    const token = localStorage.getItem("token");
+    const loginLink = document.getElementById("login-link");
+    const logoutBtn = document.getElementById("logout-btn");
+    const modeToggle = document.getElementById("mode-toggle");
+    const currentMode = localStorage.getItem("mode") || "dark";
+
+    // Apply saved mode
+    if (currentMode === "light") {
+      document.body.classList.add("light-mode");
+      modeToggle.textContent = "☀️";
+    } else {
+      document.body.classList.remove("light-mode");
+      modeToggle.textContent = "🌙";
+    }
+
+    // Toggle Light/Dark Mode
+    modeToggle.addEventListener("click", function () {
+      document.body.classList.toggle("light-mode");
+      const newMode = document.body.classList.contains("light-mode") ? "light" : "dark";
+      localStorage.setItem("mode", newMode); // Save mode selection
+
+      modeToggle.textContent = newMode === "light" ? "☀️" : "🌙";
     });
-    
-    // Set animation delay for feature cards
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.feature-card').forEach((card, i) => {
-        card.style.animationDelay = `${i * 0.2}s`;
-      });
+
+    // Handle Login & Logout Button Toggle
+    if (token === "authenticated") {
+      if (loginLink) loginLink.style.display = "none";
+      if (logoutBtn) logoutBtn.style.display = "inline-block";
+    }
+
+    logoutBtn.addEventListener("click", function () {
+      localStorage.removeItem("token");
+      alert("Logged out successfully!");
+      window.location.href = "login.html";
     });
-    
-    // Light/Dark mode toggle
-    const modeToggle = document.getElementById('mode-toggle');
-    modeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-      modeToggle.textContent = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
-    });
-    
-    // Dynamic navbar: add "scrolled" class when the user scrolls down
-    window.addEventListener('scroll', () => {
-      const navbar = document.querySelector('.navbar');
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
+  });
+    document.addEventListener("DOMContentLoaded", function () {
+      const token = localStorage.getItem("token");
+      const loginLink = document.getElementById("login-link");
+      const logoutBtn = document.getElementById("logout-btn");
+  
+      if (token === "authenticated") {
+        // Hide login button and show logout button
+        if (loginLink) loginLink.style.display = "none";
+        if (logoutBtn) logoutBtn.style.display = "inline-block";
       } else {
-        navbar.classList.remove('scrolled');
+        // Redirect to login page if not authenticated
+        alert("Unauthorized access! Redirecting to login...");
+        window.location.href = "login.html";
       }
     });
-function openPopup() {
-            document.getElementById("popup").style.display = "flex";
-        }
-
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-        }
-
-        function login() {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-            var errorMessage = document.getElementById("error-message");
-
-            if (username === "admin" && password === "1234") {
-                alert("Login successful!");
-                closePopup();
-                window.location.href = "dashboard.html"; // Redirect after login
-            } else {
-                errorMessage.textContent = "Invalid username or password!";
-            }
-        }
+  
+    // Logout Function
+    document.getElementById("logout-btn").addEventListener("click", function () {
+      localStorage.removeItem("token"); // Remove authentication token
+      alert("Logged out successfully!");
+      window.location.href = "login.html"; // Redirect to login page
+    });
   </script>
+  
 </body>
 </html>
 
