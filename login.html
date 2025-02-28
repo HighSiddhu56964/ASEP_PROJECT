@@ -299,21 +299,31 @@
   </div>
   
   <script>
-
-  document.getElementById("login-form").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent form submission
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    // Store authentication token (persists even after closing the browser)
-    localStorage.setItem("token", "authenticated"); 
-
-    alert("Login Successful! Redirecting...");
-    window.location.href = "main.html"; // Redirect to main page
-  });
-
-
+    document.getElementById("login-form").addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent form submission
+  
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const errorMessage = document.getElementById("error-message");
+  
+      // Regular expression for password validation
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+  
+      if (!passwordRegex.test(password)) {
+        errorMessage.textContent = "Password must contain at least one uppercase letter, one lowercase letter, and one special character.";
+        errorMessage.style.display = "block";
+        return;
+      }
+  
+      // Hide error message if validation passes
+      errorMessage.style.display = "none";
+  
+      // Store authentication token (persists even after closing the browser)
+      localStorage.setItem("token", "authenticated"); 
+  
+      alert("Login Successful! Redirecting...");
+      window.location.href = "main.html"; // Redirect to main page
+    });
   </script>
   
 </body>
