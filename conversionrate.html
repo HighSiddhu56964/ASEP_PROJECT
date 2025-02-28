@@ -239,7 +239,7 @@
       const toCurrency = document.getElementById("toCurrency").value;
 
       if (!amount) return alert("Please enter an amount.");
-
+      
       try {
         const response = await fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${fromCurrency}`);
         const data = await response.json();
