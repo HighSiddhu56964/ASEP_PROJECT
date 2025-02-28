@@ -1,157 +1,656 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Set Goals</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Savings Goals | Teen Finance</title>
   <style>
+    :root {
+      --primary-color: #FF6B6B;
+      --secondary-color: #4ECDC4;
+      --accent-color: #FFE66D;
+      --text-light: #2D3047;
+      --text-dark: #ffffff;
+      --card-bg-light: white;
+      --card-bg-dark: #1e293b;
+      --input-bg-light: white;
+      --input-bg-dark: #334155;
+      --input-text-light: #2D3047;
+      --input-text-dark: #ffffff;
+      --input-border-light: #ddd;
+      --input-border-dark: #475569;
+    }
+    /* Body Background with Static Image and Fade Overlay */
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+                  url('https://i.ibb.co/cSFGqZ83/goal-bg.jpg') no-repeat center center;
+      background-attachment: fixed;
+      background-size: cover; /* Changed from auto to cover */
+      color: var(--text-light);
       margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    .container {
-      max-width: 800px;
-      margin: 30px auto;
       padding: 20px;
-      background: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
+      transition: background 0.3s, color 0.3s;
     }
-    h1 {
-      text-align: center;
-      color: #444;
+    /* Dark Mode Overrides with Dark Overlay */
+    body.dark-mode {
+      background: linear-gradient(rgba(10,25,47,0.8), rgba(10,25,47,0.8)),
+                  url('https://i.ibb.co/cSFGqZ83/goal-bg.jpg') no-repeat center center;
+      background-attachment: fixed;
+      background-size: cover; /* Changed from auto to cover */
+      color: var(--text-dark);
     }
-    .form-group {
-      margin-bottom: 15px;
+    
+    /* Fix for input text color in dark mode */
+    body.dark-mode input, 
+    body.dark-mode select {
+      background-color: var(--input-bg-dark);
+      color: var(--input-text-dark);
+      border-color: var(--input-border-dark);
     }
-    .form-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
+    
+    /* Fix for goal cards in dark mode */
+    body.dark-mode .goal-card {
+      background-color: var(--card-bg-dark);
+      color: var(--text-dark);
     }
-    .form-group input, .form-group button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 16px;
+    
+    /* Fix for education section in dark mode */
+    body.dark-mode .education-section {
+      background-color: var(--card-bg-dark);
+      color: var(--text-dark);
     }
-    .form-group button {
-      background: #28a745;
-      color: white;
-      border: none;
-      cursor: pointer;
+    
+    /* Fix for category cards in dark mode */
+    body.dark-mode .category-card {
+      background-color: rgba(30, 41, 59, 0.7);
+      color: var(--text-dark);
     }
-    .form-group button:hover {
-      background: #218838;
+    
+    /* Fix for tooltip text in dark mode */
+    body.dark-mode .tooltip .tooltiptext {
+      background-color: #1e293b;
+      color: var(--text-dark);
     }
-    .goals-list {
-      margin-top: 20px;
+    
+    /* Fix for home link in dark mode */
+    body.dark-mode #homeLink {
+      background-color: var(--card-bg-dark);
+      color: var(--secondary-color);
     }
-    .goal-item {
+    
+    /* Fix for dark mode toggle button in dark mode */
+    body.dark-mode #darkModeToggle {
+      background-color: var(--card-bg-dark);
+      color: var(--text-dark);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* Top Controls: Home on left, Toggle on right */
+    #topControls {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      right: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      margin-bottom: 10px;
-      background: #f1f1f1;
+      z-index: 1500;
     }
-    .goal-item.completed {
-      background: #d4edda;
-      text-decoration: line-through;
-    }
-    .goal-item button {
-      background: #dc3545;
-      color: white;
-      border: none;
+    #homeLink {
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: bold;
+      background: #fff;
       padding: 5px 10px;
-      border-radius: 4px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background 0.3s;
+    }
+    #homeLink:hover {
+      background: var(--accent-color);
+    }
+    #darkModeToggle {
+      background: #fff;
+      border: none;
+      font-size: 20px;
+      padding: 5px 10px;
+      border-radius: 5px;
       cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background 0.3s;
     }
-    .goal-item button.complete {
-      background: #007bff;
+    #darkModeToggle:hover {
+      background: var(--accent-color);
     }
-    .goal-item button:hover {
-      opacity: 0.9;
+    .header {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .goal-form input, .goal-form select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .goal-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .category-card {
+      padding: 1rem;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      border: 2px solid transparent;
+    }
+    .category-card.selected {
+      border-color: var(--primary-color);
+    }
+    .goal-list {
+      display: grid;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .goal-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .goal-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .progress-bar {
+      height: 15px;
+      background: #eee;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--secondary-color);
+      transition: width 0.3s ease;
+    }
+    .milestone-tracker {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      gap: 1rem;
+    }
+    .milestone {
+      flex: 1;
+      text-align: center;
+      padding: 1rem;
+      background: rgba(78, 205, 196, 0.1);
+      border-radius: 8px;
+    }
+    
+    /* Fix for milestone background in dark mode */
+    body.dark-mode .milestone {
+      background: rgba(78, 205, 196, 0.2);
+    }
+    
+    .emoji-picker {
+      font-size: 24px;
+      display: flex;
+      gap: 10px;
+      margin: 1rem 0;
+    }
+    .emoji-option {
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+    .emoji-option.selected {
+      background: rgba(0, 0, 0, 0.1);
+      transform: scale(1.2);
+    }
+    
+    /* Fix for emoji selection in dark mode */
+    body.dark-mode .emoji-option.selected {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .save-btn {
+      background: var(--primary-color);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    .save-btn:hover {
+      transform: scale(1.02);
+    }
+    .delete-btn,
+    .edit-weekly-btn,
+    .add-deposit-btn {
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      position: absolute;
+      top: 10px;
+      transition: background 0.2s ease;
+    }
+    .delete-btn {
+      background: #ff4757;
+      right: 10px;
+    }
+    .delete-btn:hover {
+      background: #e84118;
+    }
+    .edit-weekly-btn {
+      background: #4ECDC4;
+      right: 110px;
+    }
+    .edit-weekly-btn:hover {
+      background: #3CB8A3;
+    }
+    .add-deposit-btn {
+      background: #4ECDC4;
+      right: 210px;
+    }
+    .add-deposit-btn:hover {
+      background: #3CB8A3;
+    }
+    /* Toast Notification Styling */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--secondary-color);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 25px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 1000;
+    }
+    /* Education Section Styling */
+    .education-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+    .education-section h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .education-section > div {
+      margin-bottom: 1.5rem;
+    }
+    .education-section input {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 8px;
+    }
+    .parent-dashboard a {
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    /* Fix for parent dashboard link in dark mode */
+    body.dark-mode .parent-dashboard a {
+      color: var(--secondary-color);
+    }
+    
+    /* Tooltip Styling */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      color: var(--accent-color);
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 220px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 3000;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -110px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Set Your Goals</h1>
-    <div class="form-group">
-      <label for="goal-input">Goal</label>
-      <input type="text" id="goal-input" placeholder="Enter your goal (e.g., Save ₹5,000)">
-    </div>
-    <div class="form-group">
-      <label for="deadline-input">Deadline</label>
-      <input type="date" id="deadline-input">
-    </div>
-    <div class="form-group">
-      <button id="add-goal-btn">Add Goal</button>
-    </div>
-    <div class="goals-list" id="goals-list">
-      <!-- Goals will appear here -->
-    </div>
+  <!-- Top Controls: Home on Left, Toggle on Right -->
+  <div id="topControls">
+    <a href="main.html" id="homeLink">Home</a>
+    <button id="darkModeToggle">🌙</button>
   </div>
 
+  <div class="container">
+    <header class="header">
+      <h1>🎯 Set Your Money Goals With SavyMoney</h1>
+      <p>Dream it. Plan it. Achieve it!</p>
+    </header>
+
+    <section class="goal-form">
+      <h2>Create New Goal</h2>
+      <form id="goalForm">
+        <div>
+          <input type="text" placeholder="Goal Name (e.g., New Phone, College Fund)" id="goalName" required title="Give your goal a name to help you remember what you're saving for.">
+          <span class="tooltip">ℹ️
+            <span class="tooltiptext">A clear goal name helps you stay motivated!</span>
+          </span>
+        </div>
+        
+        <div class="emoji-picker" id="emojiPicker">
+          <span class="emoji-option" data-emoji="💸">💸</span>
+          <span class="emoji-option" data-emoji="📱">📱</span>
+          <span class="emoji-option" data-emoji="🎓">🎓</span>
+          <span class="emoji-option" data-emoji="🚲">🚲</span>
+          <span class="emoji-option" data-emoji="🎮">🎮</span>
+        </div>
+
+        <div>
+          <input type="number" placeholder="Current Savings (₹)" id="currentAmount" required title="Enter the amount you have saved so far.">
+          <span class="tooltip">ℹ️
+            <span class="tooltiptext">This is your starting amount toward your goal.</span>
+          </span>
+        </div>
+        <div>
+          <input type="number" placeholder="Target Amount (₹)" id="targetAmount" required title="Enter your savings goal amount.">
+          <span class="tooltip">ℹ️
+            <span class="tooltiptext">The amount you need to achieve your goal.</span>
+          </span>
+        </div>
+        <div>
+          <input type="date" placeholder="Target Date" id="targetDate" required title="Choose the date by which you want to reach your goal.">
+          <span class="tooltip">ℹ️
+            <span class="tooltiptext">Setting a deadline helps you stay on track.</span>
+          </span>
+        </div>
+        <!-- Weekly Savings Input -->
+        <div>
+          <input type="number" placeholder="Weekly Savings (₹)" id="weeklySavings" title="Optional: Specify how much you can save each week.">
+          <span class="tooltip">ℹ️
+            <span class="tooltiptext">This can be adjusted later using the 'Edit Weekly' button.</span>
+          </span>
+        </div>
+
+        <div class="goal-categories" id="termCategories">
+          <div class="category-card" data-term="short">
+            <h3>Short Term</h3>
+            <p>(0-6 months)</p>
+          </div>
+          <div class="category-card" data-term="medium">
+            <h3>Medium Term</h3>
+            <p>(6-12 months)</p>
+          </div>
+          <div class="category-card" data-term="long">
+            <h3>Long Term</h3>
+            <p>(1+ years)</p>
+          </div>
+        </div>
+
+        <button type="submit" class="save-btn">Save Goal</button>
+      </form>
+    </section>
+
+    <section class="goal-list" id="goalList"></section>
+
+    <!-- Updated Educational Section (removed lesson & quiz) -->
+    <section class="education-section">
+      <h2>Financial Literacy Hub</h2>
+      <div class="daily-tip">
+        <h3>Daily Financial Tip</h3>
+        <p id="dailyTipText"></p>
+      </div>
+      <div class="savings-simulator">
+        <h3>Savings Simulator</h3>
+        <p>Calculate how much you can save over time!</p>
+        <input type="number" id="simWeekly" placeholder="Weekly Savings (₹)">
+        <input type="number" id="simWeeks" placeholder="Number of Weeks">
+        <input type="number" id="simRate" placeholder="Annual Interest Rate (%)">
+        <button id="simulateBtn" class="save-btn">Simulate Savings</button>
+        <p id="simulationResult"></p>
+      </div>
+      <div class="parent-dashboard" style="text-align: center;">
+        <a href="#">Parent Dashboard</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Toast Notification Element -->
+  <div id="toast"></div>
+
   <script>
-    // Select elements
-    const goalInput = document.getElementById("goal-input");
-    const deadlineInput = document.getElementById("deadline-input");
-    const addGoalBtn = document.getElementById("add-goal-btn");
-    const goalsList = document.getElementById("goals-list");
+    // Initialize goals from localStorage
+    let goals = JSON.parse(localStorage.getItem('goals')) || [];
+    let selectedTerm = 'short';
+    let selectedEmoji = '💸';
 
-    // Event listener for adding goals
-    addGoalBtn.addEventListener("click", function () {
-      const goal = goalInput.value;
-      const deadline = deadlineInput.value;
+    // Initialize Emoji Picker
+    document.querySelectorAll('.emoji-option').forEach(emoji => {
+      emoji.addEventListener('click', () => {
+        document.querySelectorAll('.emoji-option').forEach(e => e.classList.remove('selected'));
+        emoji.classList.add('selected');
+        selectedEmoji = emoji.dataset.emoji;
+      });
+    });
 
-      if (goal === "" || deadline === "") {
-        alert("Please enter both a goal and a deadline.");
+    // Initialize Term Selection
+    document.querySelectorAll('.category-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedTerm = card.dataset.term;
+      });
+    });
+
+    // Form Submission
+    document.getElementById('goalForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const newGoal = {
+        id: Date.now(),
+        name: document.getElementById('goalName').value,
+        emoji: selectedEmoji,
+        current: parseFloat(document.getElementById('currentAmount').value),
+        target: parseFloat(document.getElementById('targetAmount').value),
+        deadline: document.getElementById('targetDate').value,
+        term: selectedTerm,
+        weekly: document.getElementById('weeklySavings').value ? parseFloat(document.getElementById('weeklySavings').value) : null
+      };
+
+      goals.push(newGoal);
+      localStorage.setItem('goals', JSON.stringify(goals));
+      updateGoalList();
+      e.target.reset();
+      // Reset the selected emoji and term
+      document.querySelectorAll('.emoji-option').forEach(e => e.classList.remove('selected'));
+      document.querySelector('.emoji-option[data-emoji="💸"]').classList.add('selected');
+      selectedEmoji = '💸';
+      document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+      document.querySelector('.category-card[data-term="short"]').classList.add('selected');
+      selectedTerm = 'short';
+    });
+
+    // Update Goal List Display
+    function updateGoalList() {
+      const goalList = document.getElementById('goalList');
+      goalList.innerHTML = '';
+      
+      goals.forEach(goal => {
+        const daysLeft = Math.ceil((new Date(goal.deadline) - Date.now()) / (1000 * 60 * 60 * 24));
+        const weeksLeft = Math.ceil(daysLeft / 7);
+        const remainingAmount = goal.target - goal.current;
+        const autoWeekly = weeksLeft > 0 ? Math.round(remainingAmount / weeksLeft) : 0;
+        const weeklyTarget = goal.weekly !== null ? goal.weekly : autoWeekly;
+        const progress = Math.min((goal.current / goal.target * 100), 100).toFixed(1);
+
+        const goalCard = document.createElement('div');
+        goalCard.className = 'goal-card';
+        goalCard.innerHTML = 
+          `<button class="delete-btn" onclick="deleteGoal(${goal.id})">×</button>
+           <button class="edit-weekly-btn" onclick="editWeekly(${goal.id})">Edit Weekly</button>
+           <button class="add-deposit-btn" onclick="addDeposit(${goal.id})">Add Weekly</button>
+           <h3>${goal.emoji} ${goal.name}</h3>
+           <div class="progress-bar">
+             <div class="progress-fill" style="width: ${progress}%"></div>
+           </div>
+           <p>₹${formatNumber(goal.current)} saved of ₹${formatNumber(goal.target)}</p>
+           <div class="milestone-tracker">
+             <div class="milestone">
+               <small>Weekly Savings</small>
+               <h4>₹${formatNumber(weeklyTarget)}</h4>
+             </div>
+             <div class="milestone">
+               <small>Days Left</small>
+               <h4>${daysLeft > 0 ? daysLeft : 'Overdue!'}</h4>
+             </div>
+             <div class="milestone">
+               <small>Progress</small>
+               <h4>${progress}%</h4>
+             </div>
+           </div>`;
+        goalList.appendChild(goalCard);
+      });
+    }
+
+    // Delete Goal Function
+    function deleteGoal(id) {
+      goals = goals.filter(goal => goal.id !== id);
+      localStorage.setItem('goals', JSON.stringify(goals));
+      updateGoalList();
+    }
+
+    // Edit Weekly Savings Function
+    function editWeekly(id) {
+      const goalIndex = goals.findIndex(goal => goal.id === id);
+      if (goalIndex === -1) return;
+      const newWeekly = prompt("Enter new weekly savings amount (₹):", goals[goalIndex].weekly || "");
+      if (newWeekly === null) return;
+      goals[goalIndex].weekly = newWeekly ? parseFloat(newWeekly) : null;
+      localStorage.setItem('goals', JSON.stringify(goals));
+      updateGoalList();
+    }
+
+    // Add Weekly Deposit Function with Toast
+    function addDeposit(id) {
+      const goalIndex = goals.findIndex(goal => goal.id === id);
+      if (goalIndex === -1) return;
+      if (goals[goalIndex].weekly === null) {
+        showToast("Please set a weekly savings amount first using the 'Weekly Savings' field or 'Edit Weekly' button.");
         return;
       }
+      goals[goalIndex].current = Math.min(goals[goalIndex].current + goals[goalIndex].weekly, goals[goalIndex].target);
+      localStorage.setItem('goals', JSON.stringify(goals));
+      if (goals[goalIndex].current >= goals[goalIndex].target) {
+        showToast("Congratulations! You've reached your goal! Keep up the great work!");
+      } else {
+        showToast("Great deposit! Keep saving—you're on your way to success!");
+      }
+      updateGoalList();
+    }
 
-      // Create a new goal item
-      const goalItem = document.createElement("div");
-      goalItem.classList.add("goal-item");
+    // Function to display a toast notification.
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.opacity = 1;
+      setTimeout(() => { toast.style.opacity = 0; }, 3000);
+    }
 
-      // Goal description
-      const goalDescription = document.createElement("span");
-      goalDescription.textContent = `${goal} (Deadline: ${deadline})`;
-      goalItem.appendChild(goalDescription);
+    // Format numbers in Indian style
+    function formatNumber(num) {
+      return num.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+    }
 
-      // Complete button
-      const completeBtn = document.createElement("button");
-      completeBtn.textContent = "Mark Complete";
-      completeBtn.classList.add("complete");
-      completeBtn.addEventListener("click", function () {
-        goalItem.classList.add("completed");
-        completeBtn.remove(); // Remove the "Complete" button once marked
-      });
-      goalItem.appendChild(completeBtn);
+    // Financial Literacy Features
+    // Daily Financial Tip
+    const dailyTips = [
+      "Remember: Even small, regular savings can grow into a big sum over time!",
+      "Tip: Track your spending to understand where your money goes.",
+      "Did you know? Setting financial goals can make saving more fun!",
+      "Financial Fact: Compound interest is the secret to growing your money.",
+      "Remember to review your budget regularly and adjust as needed."
+    ];
+    function displayDailyTip() {
+      const tipText = document.getElementById('dailyTipText');
+      const tip = dailyTips[Math.floor(Math.random() * dailyTips.length)];
+      tipText.textContent = tip;
+    }
+    displayDailyTip();
 
-      // Delete button
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Delete";
-      deleteBtn.addEventListener("click", function () {
-        goalsList.removeChild(goalItem);
-      });
-      goalItem.appendChild(deleteBtn);
-
-      // Add the goal item to the list
-      goalsList.appendChild(goalItem);
-
-      // Clear inputs
-      goalInput.value = "";
-      deadlineInput.value = "";
+    // Savings Simulator
+    document.getElementById('simulateBtn').addEventListener('click', () => {
+      const weekly = parseFloat(document.getElementById('simWeekly').value) || 0;
+      const weeks = parseInt(document.getElementById('simWeeks').value) || 0;
+      const rate = parseFloat(document.getElementById('simRate').value) || 0;
+      let total = weekly * weeks;
+      let interest = total * (rate / 100) * (weeks / 52);
+      const result = total + interest;
+      document.getElementById('simulationResult').textContent = `Estimated Savings: ₹${result.toFixed(2)} (Principal: ₹${total.toFixed(2)} + Interest: ₹${interest.toFixed(2)})`;
     });
+
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      // Toggle icon: show moon if light mode, sun if dark mode
+      darkModeToggle.textContent = document.body.classList.contains('dark-mode') ? "☀️" : "🌙";
+      
+      // Check if dark mode is saved in localStorage
+      if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    });
+    
+    // Check for saved dark mode preference
+    if (localStorage.getItem('darkMode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+      darkModeToggle.textContent = "☀️";
+    }
+
+    // Initial Load
+    updateGoalList();
   </script>
 </body>
 </html>
