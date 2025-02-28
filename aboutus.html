@@ -119,5 +119,31 @@
         (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="fuK6YtRQSpvS_ydUpjRAg";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
 
     </script>
+    <button id="backButton">Back</button>
+
+    <style>
+        #backButton {
+            position: fixed; /* Keeps it in place when scrolling */
+            top: 10px;       /* Distance from the top */
+            left: 10px;      /* Distance from the left */
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff; /* Bootstrap blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        #backButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    
+    <script>
+        document.getElementById("backButton").addEventListener("click", function () {
+            window.location.href = "index.html"; // Change this to your main page filename
+        });
+    </script>
 </body>
 </html>

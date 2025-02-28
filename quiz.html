@@ -274,5 +274,31 @@ h1 {
             <button onclick="restartQuiz()">Restart Quiz</button>
         </div>
     </div>
+    <button id="backButton">Back</button>
+
+    <style>
+        #backButton {
+            position: fixed; /* Keeps it in place when scrolling */
+            top: 10px;       /* Distance from the top */
+            left: 10px;      /* Distance from the left */
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff; /* Bootstrap blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        #backButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    
+    <script>
+        document.getElementById("backButton").addEventListener("click", function () {
+            window.location.href = "index.html"; // Change this to your main page filename
+        });
+    </script>
 </body>
 </html>
