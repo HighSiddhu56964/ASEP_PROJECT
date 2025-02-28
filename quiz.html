@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Quiz</title>
+    <link rel="stylesheet" href="quiz.css">
+    <script defer src="quiz.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Financial Knowledge Quiz</h1>
+        </header>
+
+        <div class="quiz-container" id="quiz-box">
+            <h2 id="question">Loading Question...</h2>
+            <div id="options"></div>
+            <button id="next-btn">Next</button>
+        </div>
+
+        <div id="score-box" class="hidden">
+            <h2>Your Final Score:</h2>
+            <p id="score">0 / 0</p>
+            <button onclick="restartQuiz()">Restart Quiz</button>
+        </div>
+    </div>
+</body>
+</html>
