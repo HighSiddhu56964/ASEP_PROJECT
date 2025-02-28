@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Quiz - 10 Questions</title>
+    <style>
+        /* General Page Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        /* Finance Quiz Styling */
+        .finance-quiz-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .quiz-header h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .quiz-header p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+        
+        #quiz-loading {
+            text-align: center;
+            padding: 40px;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        
+        #question-container {
+            background-color: #f9fafb;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #3498db;
+        }
+        
+        #question-number {
+            display: block;
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        #question-text {
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .option {
+            background-color: #f4f6f7;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e0e0e0;
+            position: relative;
+        }
+        
+        .option:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .option.selected {
+            background-color: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+        
+        .option label {
+            cursor: pointer;
+            display: inline-block;
+            width: calc(100% - 30px);
+            vertical-align: middle;
+        }
+        
+        #quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        #submit-btn {
+            background-color: #27ae60;
+        }
+        
+        #submit-btn:hover {
+            background-color: #219955;
+        }
+        
+        #results-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        #results-container h3 {
+            text-align: center;
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        #score-display {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .review-item {
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .review-item.correct {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid #2ecc71;
+        }
+        
+        .review-item.incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .review-item p {
+            margin: 8px 0;
+        }
+        
+        .user-answer {
+            margin: 10px 0;
+            padding-left: 15px;
+            border-left: 2px solid #ddd;
+        }
+        
+        .correct-answer {
+            font-weight: bold;
+            margin: 10px 0;
+            padding-left: 15px;
+            border-left: 2px solid #2ecc71;
+        }
+        
+        #retake-btn {
+            display: block;
+            margin: 30px auto 0;
+            background-color: #3498db;
+        }
+        
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #eaeaea;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #3498db;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .finance-quiz-container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+            
+            #question-container, #results-container {
+                padding: 20px;
+            }
+            
+            button {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .finance-quiz-container {
+                padding: 15px;
+            }
+            
+            #quiz-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            #quiz-controls button {
+                width: 100%;
+            }
+            
+            .option {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="finance-quiz-container">
+        <div class="quiz-header">
+            <h2>Test Your Financial Knowledge</h2>
+            <p>Answer these 10 questions to see how well you understand financial concepts</p>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="quiz-progress" style="width: 0%"></div>
+        </div>
+        
+        <div id="quiz-loading">Loading questions...</div>
+        
+        <div id="quiz-content" style="display: none;">
+            <div id="question-container">
+                <span id="question-number">Question 1/10</span>
+                <h3 id="question-text">Question text will appear here</h3>
+                
+                <div id="options-container">
+                    <!-- Options will be populated dynamically -->
+                </div>
+            </div>
+            
+            <div id="quiz-controls">
+                <button id="prev-btn" disabled>Previous</button>
+                <button id="next-btn">Next</button>
+                <button id="submit-btn" style="display: none;">Submit Quiz</button>
+            </div>
+        </div>
+        
+        <div id="results-container" style="display: none;">
+            <h3>Your Results</h3>
+            <p id="score-display"></p>
+            <div id="answer-review"></div>
+            <button id="retake-btn">Take Quiz Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_URL = 'https://your-finance-api.com/questions';
+        const QUIZ_LENGTH = 10;
+
+        // Quiz state
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        // DOM Elements
+        const loadingElement = document.getElementById('quiz-loading');
+        const quizContent = document.getElementById('quiz-content');
+        const questionNumber = document.getElementById('question-number');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const prevButton = document.getElementById('prev-btn');
+        const nextButton = document.getElementById('next-btn');
+        const submitButton = document.getElementById('submit-btn');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreDisplay = document.getElementById('score-display');
+        const answerReview = document.getElementById('answer-review');
+        const retakeButton = document.getElementById('retake-btn');
+        const progressBar = document.getElementById('quiz-progress');
+
+        // Initialize the quiz
+        async function initQuiz() {
+            try {
+                await fetchQuestions();
+                renderQuestion();
+                updateProgressBar();
+                quizContent.style.display = 'block';
+                loadingElement.style.display = 'none';
+                quizStarted = true;
+            } catch (error) {
+                loadingElement.textContent = 'Error loading quiz questions. Please try again later.';
+                console.error('Failed to load quiz:', error);
+            }
+        }
+
+        // Fetch questions from API
+        async function fetchQuestions() {
+            try {
+                // For demonstration purposes. In a real application, uncomment the following:
+                // const response = await fetch(API_URL);
+                // const data = await response.json();
+                // questions = data.questions.slice(0, QUIZ_LENGTH);
+                
+                // Simulated API response with 10 finance questions
+                questions = [
+                    {
+                        id: 1,
+                        question: 'What is the Rule of 72 in finance?',
+                        options: [
+                            'A law requiring 72% of investments to be in stocks',
+                            'A formula to estimate how long it takes for an investment to double given a fixed annual rate of return',
+                            'A tax regulation requiring 72% of retirement funds to remain untouched',
+                            'A banking regulation limiting loans to 72% of collateral value'
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 2,
+                        question: 'What does P/E ratio stand for in stock valuation?',
+                        options: [
+                            'Profit/Earnings ratio',
+                            'Price/Earnings ratio', 
+                            'Potential/Existing ratio',
+                            'Performance/Efficiency ratio'
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 3,
+                        question: 'Which of these is NOT considered a type of market risk?',
+                        options: [
+                            'Interest rate risk',
+                            'Currency risk',
+                            'Equity price risk',
+                            'Default risk'
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        id: 4,
+                        question: 'What is a bond yield?',
+                        options: [
+                            'The total amount paid for the bond',
+                            'The annual interest payment divided by the current price of the bond',
+                            'The face value of the bond',
+                            'The difference between purchase price and maturity value'
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 5,
+                        question: 'What is diversification in investment strategy?',
+                        options: [
+                            'Investing all funds in a single high-performing stock',
+                            'Spreading investments across various asset classes to reduce risk',
+                            'Changing investment strategies frequently',
+                            'Investing only in government bonds'
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 6,
+                        question: 'What is a bull market?',
+                        options: [
+                            'A market where prices are falling',
+                            'A market where prices are rising',
+                            'A market with high volatility',
+                            'A market controlled by institutional investors'
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 7,
+                        question: 'What is an ETF?',
+                        options: [
+                            'Extra Tax Form',
+                            'Exchange-Traded Fund',
+                            'Electronic Transfer of Funds',
+                            'Extended Time Financing'
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 8,
+                        question: 'What does ROI stand for?',
+                        options: [
+                            'Risk of Investment',
+                            'Return on Investment',
+                            'Ratio of Income',
+                            'Record of Interest'
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 9,
+                        question: 'What is a hedge fund?',
+                        options: [
+                            'A fund that invests exclusively in agricultural commodities',
+                            'A mutual fund that guarantees returns',
+                            'An investment partnership that uses high-risk methods to obtain large returns',
+                            'A government-backed investment vehicle'
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        id: 10,
+                        question: 'What is a liquidity ratio?',
+                        options: [
+                            'The ratio of cash to total assets',
+                            'A measure of how quickly assets can be converted to cash to pay short-term liabilities',
+                            'The ratio of debt to equity',
+                            'The percentage of liquid assets in an investment portfolio'
+                        ],
+                        correctAnswer: 1
+                    }
+                ];
+                
+                // Initialize user answers array with null values
+                userAnswers = new Array(questions.length).fill(null);
+                
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+            } catch (error) {
+                throw new Error('Failed to fetch questions: ' + error.message);
+            }
+        }
+
+        // Render the current question
+        function renderQuestion() {
+            const question = questions[currentQuestionIndex];
+            questionNumber.textContent = `Question ${currentQuestionIndex + 1}/${questions.length}`;
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create option elements
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                
+                const selected = userAnswers[currentQuestionIndex] === index;
+                if (selected) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionElement.innerHTML = `
+                    <input type="radio" id="option-${index}" name="question" value="${index}" ${selected ? 'checked' : ''}>
+                    <label for="option-${index}">${option}</label>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update button states
+            prevButton.disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                nextButton.style.display = 'none';
+                submitButton.style.display = 'block';
+            } else {
+                nextButton.style.display = 'block';
+                submitButton.style.display = 'none';
+            }
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Handle option selection
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestionIndex] = optionIndex;
+            
+            // Update visual selection
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                if (index === optionIndex) {
+                    option.classList.add('selected');
+                    option.querySelector('input').checked = true;
+                } else {
+                    option.classList.remove('selected');
+                    option.querySelector('input').checked = false;
+                }
+            });
+        }
+
+        // Navigate to previous question
+        function goToPrevious() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+                updateProgressBar();
+            }
+        }
+
+        // Navigate to next question
+        function goToNext() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+                updateProgressBar();
+            }
+        }
+
+        // Calculate score and display results
+        function submitQuiz() {
+            let score = 0;
+            
+            questions.forEach((question, index) => {
+                if (userAnswers[index] === question.correctAnswer) {
+                    score++;
+                }
+            });
+            
+            displayResults(score);
+        }
+
+        // Display quiz results
+        function displayResults(score) {
+            quizContent.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            scoreDisplay.textContent = `You scored ${score} out of ${questions.length} (${percentage}%)`;
+            
+            // Create answer review
+            answerReview.innerHTML = '';
+            questions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const correct = userAnswer === question.correctAnswer;
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = `review-item ${correct ? 'correct' : 'incorrect'}`;
+                
+                reviewItem.innerHTML = `
+                    <p><strong>Question ${index + 1}:</strong> ${question.question}</p>
+                    <p class="user-answer">Your answer: ${userAnswer !== null ? question.options[userAnswer] : 'Not answered'}</p>
+                    <p class="correct-answer">Correct answer: ${question.options[question.correctAnswer]}</p>
+                `;
+                
+                answerReview.appendChild(reviewItem);
+            });
+        }
+
+        // Reset the quiz
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            resultsContainer.style.display = 'none';
+            renderQuestion();
+            updateProgressBar();
+            quizContent.style.display = 'block';
+        }
+
+        // Event listeners
+        prevButton.addEventListener('click', goToPrevious);
+        nextButton.addEventListener('click', goToNext);
+        submitButton.addEventListener('click', submitQuiz);
+        retakeButton.addEventListener('click', resetQuiz);
+
+        // Start the quiz
+        document.addEventListener('DOMContentLoaded', function() {
+            initQuiz();
+        });
+        
+        // If DOM is already loaded, initialize immediately
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            initQuiz();
+        }
+    </script>
+</body>
+</html>
